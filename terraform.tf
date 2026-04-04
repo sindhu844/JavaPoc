@@ -1,3 +1,10 @@
+terraform{
+backend "s3" {
+    bucket = "s3-bucket-javapoc"   # Replace with your S3 bucket name
+    key    = "project/terraform.tfstate"   # Path inside the bucket
+    region = "us-east-1"                   # Your AWS region
+  }
+}
 provider "aws"{
 region = "us-east-1"
 }
