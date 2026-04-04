@@ -43,7 +43,7 @@
         </profile>
 
         <!-- Hardcoded Java 17 -->
-        <profile>
+        <!-- <profile>
             <id>java17</id>
             <build>
                 <plugins>
@@ -57,7 +57,7 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>
+        </profile> -->
     </profiles>
 
 </project>
