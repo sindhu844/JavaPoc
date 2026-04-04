@@ -1,0 +1,37 @@
+name: cicd pipeline
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  JavaPocJob1:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        version: [11, 17]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: checkout from git
+        uses: actions/checkout@v3
+      - name: aws creds
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          aws-region: us-east-1
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY}}
+          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS}}
+      - name: setup terraform
+        uses: hashicorp/setup-terraform@v3
+      - name: initialize terraform
+        run: terraform init
+      - name: terraform planning
+        run: terraform plan
+      - name: terraform apply changes
+        run: terraform apply -auto-approve
+      - name: setup java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin' 
+          java-version: ${{matrix.version }}
+      - name: build java application
+        run: mvn clean install
+      
