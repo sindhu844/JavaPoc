@@ -35,17 +35,16 @@ jobs:
       - name: build java application
         run: mvn clean install
 
-      - name: Build Docker image
-        run: |
-          docker build -t myapp:latest .
+      # - name: Build Docker image
+      #   run: |
+      #     docker build -t myapp:latest .
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.8
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
-          key: ${{ secrets.AWS_SSH_KEY }}
           script: |
+            cd /home/ubuntu/myapp
+            docker build -t myapp:latest .
             docker stop myapp || true
             docker rm myapp || true
             docker run -d --name myapp -p 8081:8081 myapp:latest
