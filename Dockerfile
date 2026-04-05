@@ -1,5 +1,5 @@
 # Use OpenJDK 11
-FROM openjdk:11-jre-slim
+FROM eclipse-temurin:11-jdk-jammy
 
 # Set working directory
 WORKDIR /app
